@@ -34,6 +34,8 @@
     "vue": "^2.3.4"
   },
   "nodemonConfig": {
-    "ignore": ["dist/*"]    
+    "ignore": [
+      "dist/*"
+    ]
   }
 }
