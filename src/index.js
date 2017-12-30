@@ -2,7 +2,7 @@ import Vue from 'vue'
 import {ruuvitagApi, tellstickApi, hueApi, FETCH_INTERVAL} from './config.js'
 require('./index.css')
 
-const postHeaders = {'Content-Type': 'application/json', 'Access-Control-Allow-Origin':'*'}      
+const postHeaders = {'Content-Type': 'application/json', 'Access-Control-Allow-Origin':'*'}
 
 const tagData = {
   template:'<div class="tag">\
