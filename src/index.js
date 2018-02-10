@@ -113,7 +113,7 @@ const masterswitchOffData = {
   },
   methods: {
     allOff: function(devices, switchGroups) {
-      const deviceIds = devices.map(device => device.id)
+      const deviceIds = devices.filter(device => device.switchedOn).map(device => device.id)
       const switchGroupIds = switchGroups.map(switchGroup => switchGroup.id)
       const allIds = deviceIds.concat(switchGroupIds)
       toggleSwitch(tellstickApi.urls.turnOffSwitch, allIds)
@@ -136,7 +136,7 @@ const masterswitchOnData = {
   },
   methods: {
     allOn: function(devices, switchGroups) {
-      const deviceIds = devices.map(device => device.id)
+      const deviceIds = devices.filter(device => !device.switchedOn).map(device => device.id)
       const switchGroupIds = switchGroups.map(switchGroup => switchGroup.id)
       const allIds = deviceIds.concat(switchGroupIds)
       toggleSwitch(tellstickApi.urls.turnOnSwitch, allIds)
