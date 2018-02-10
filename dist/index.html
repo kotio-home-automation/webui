@@ -36,6 +36,10 @@
           <tdsensor v-if="sensor.id" :sensor="sensor"></tdsensor>
         </div>
       </div>
+      <div class="master-switches" v-if="hasControllables">
+        <masterswitch-on :devices="tellstickSwitches.devices" :switchgroups="tellstickSwitches.groups"></masterswitch-on>
+        <masterswitch-off :devices="tellstickSwitches.devices" :switchgroups="tellstickSwitches.groups"></masterswitch-off>
+      </div>
       <div class="switches" v-if="hasSwitches">
         <div v-for="device in tellstickSwitches.devices">
           <tdswitch v-if="device.id" :device="device"></tdswitch>

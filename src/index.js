@@ -98,6 +98,52 @@ const hueSwitchData = {
   }
 }
 
+const masterswitchOffData = {
+  template: `<div>
+    <div v-on:click="allOff(devices, switchgroups)" class="master-switch clickable">
+      <div class="switch-status">
+        <i class="fa fa-power-off fa-lg all-red icon clickable"></i>
+      </div>
+      <div class="switch-name">All off</div>
+    </div>
+  </div>`,
+  props: ['devices', 'switchgroups'],
+  data: function() {
+    return {}
+  },
+  methods: {
+    allOff: function(devices, switchGroups) {
+      const deviceIds = devices.map(device => device.id)
+      const switchGroupIds = switchGroups.map(switchGroup => switchGroup.id)
+      const allIds = deviceIds.concat(switchGroupIds)
+      toggleSwitch(tellstickApi.urls.turnOffSwitch, allIds)
+    }
+  }
+}
+
+const masterswitchOnData = {
+  template: `<div>
+    <div v-on:click="allOn(devices, switchgroups)" class="master-switch clickable">
+      <div class="switch-status">
+        <i class="fa fa-power-off fa-lg all-green icon clickable"></i>
+      </div>
+      <div class="switch-name">All on</div>
+    </div>
+  </div>`,
+  props: ['devices', 'switchgroups'],
+  data: function() {
+    return {}
+  },
+  methods: {
+    allOn: function(devices, switchGroups) {
+      const deviceIds = devices.map(device => device.id)
+      const switchGroupIds = switchGroups.map(switchGroup => switchGroup.id)
+      const allIds = deviceIds.concat(switchGroupIds)
+      toggleSwitch(tellstickApi.urls.turnOnSwitch, allIds)
+    }
+  }
+}
+
 const app = new Vue({
   el: '#app',
   data: {
@@ -108,13 +154,16 @@ const app = new Vue({
     hasSwitches: false,
     hasSwitchGroups: false,
     hueGroups: hueApi.enabled,
-    hasHueGroups: false
+    hasHueGroups: false,
+    hasControllables: false
   },
   components: {
     'ruuvitag': tagData,
     'tdsensor': tdSensorData,
     'tdswitch': tdSwitchData,
-    'hueswitch': hueSwitchData
+    'hueswitch': hueSwitchData,
+    'masterswitch-on': masterswitchOnData,
+    'masterswitch-off': masterswitchOffData
   }
 })
 
@@ -145,10 +194,12 @@ function fetchTellstickData() {
 
         if (data.devices.length > 0) {
           app.hasSwitches = true
+          app.hasControllables = true
         }
 
         if (data.groups.length > 0) {
           app.hasSwitchGroups = true
+          app.hasControllables = true
         }
       })
   }
@@ -156,7 +207,6 @@ function fetchTellstickData() {
 
 function fetchHueData() {
   if (hueApi.enabled) {
-    console.log('hueApi enabled!');
     // app.hueSwitches = 'Jee'
     fetch(hueApi.urls.init, {headers: postHeaders}).then(initdata => {
       fetch(hueApi.urls.hueGroups)
@@ -164,11 +214,9 @@ function fetchHueData() {
       .then(data => {
         app.hueGroups = data
 
-        console.log("GROUPS:", data);
-
         if (data.length > 0) {
-          console.log('Yep, got hue groups!');
-          app.hasHueGroups = true;
+          app.hasHueGroups = true
+          app.hasControllables = true
         }
       })
     })
