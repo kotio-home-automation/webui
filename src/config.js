@@ -1,11 +1,11 @@
-const TELLSTICK_API_URL = 'http://pommi:3101'
-const RUUVITAG_API_URL = 'http://pommi:3102'
+const TELLSTICK_API_URL = 'http://localhost:3101'
+const RUUVITAG_API_URL = 'http://localhost:3102'
 const HUE_API_URL = 'http://localhost:3103'
 
 export const FETCH_INTERVAL = 30000
 
 export const ruuvitagApi = {
-  enabled: true,
+  enabled: false,
   urls: {
     ruuvitags: `${RUUVITAG_API_URL}/ruuvitag`
   }
@@ -21,7 +21,7 @@ export const tellstickSwitchApi = {
 }
 
 export const tellstickSensorApi = {
-  enabled: true,
+  enabled: false,
   urls: {
     tellstickSensors: `${TELLSTICK_API_URL}/tellstick/sensors`,
   }
