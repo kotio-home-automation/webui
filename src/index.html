@@ -29,10 +29,10 @@
   <body>
     <div id="app">
       <div class="sensors" v-if="hasSensors">
-        <div v-for="tag in ruuvitags">
+        <div v-if="hasRuuvitagSensors" v-for="tag in ruuvitags">
           <ruuvitag v-if="tag.data" :tag="tag"></ruuvitag>
         </div>
-        <div v-for="sensor in tellstickSensors">
+        <div v-if="hasTellstickSensors" v-for="sensor in tellstickSensors">
           <tdsensor v-if="sensor.id" :sensor="sensor"></tdsensor>
         </div>
       </div>

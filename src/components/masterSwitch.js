@@ -1,4 +1,4 @@
-import {tellstickApi} from '../config.js'
+import {tellstickSwitchApi} from '../config.js'
 
 export const masterSwitchOffData = (toggleSwitch) => ({
   template: `<div>
@@ -18,7 +18,7 @@ export const masterSwitchOffData = (toggleSwitch) => ({
       const deviceIds = devices.filter(device => device.switchedOn).map(device => device.id)
       const switchGroupIds = switchGroups.map(switchGroup => switchGroup.id)
       const allIds = deviceIds.concat(switchGroupIds)
-      toggleSwitch(tellstickApi.urls.turnOffSwitch, allIds)
+      toggleSwitch(tellstickSwitchApi.urls.turnOffSwitch, allIds)
     }
   }
 })
@@ -41,7 +41,7 @@ export const masterSwitchOnData = (toggleSwitch) => ({
       const deviceIds = devices.filter(device => !device.switchedOn).map(device => device.id)
       const switchGroupIds = switchGroups.map(switchGroup => switchGroup.id)
       const allIds = deviceIds.concat(switchGroupIds)
-      toggleSwitch(tellstickApi.urls.turnOnSwitch, allIds)
+      toggleSwitch(tellstickSwitchApi.urls.turnOnSwitch, allIds)
     }
   }
 })
