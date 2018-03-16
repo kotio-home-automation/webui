@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import {ruuvitagApi, tellstickApi, hueApi, FETCH_INTERVAL} from './config.js'
+import {ruuvitagApi, tellstickSwitchApi, tellstickSensorApi, hueApi, FETCH_INTERVAL} from './config.js'
 import {tagData} from './components/ruuvitag'
 import {tdSensorData} from './components/tellstickSensor'
 import {tdSwitchData} from './components/tellstickSwitch'
@@ -27,9 +27,11 @@ const app = new Vue({
   el: '#app',
   data: {
     ruuvitags: ruuvitagApi.enabled,
-    tellstickSensors: tellstickApi.enabled,
-    tellstickSwitches: tellstickApi.enabled,
-    hasSensors: ruuvitagApi.enabled,
+    tellstickSensors: tellstickSwitchApi.enabled,
+    tellstickSwitches: tellstickSwitchApi.enabled,
+    hasRuuvitagSensors: false,
+    hasTellstickSensors: false,
+    hasSensors: false,
     hasSwitches: false,
     hasSwitchGroups: false,
     hueGroups: hueApi.enabled,
@@ -50,23 +52,20 @@ function fetchRuuvitagData() {
   if (ruuvitagApi.enabled) {
     fetch(ruuvitagApi.urls.ruuvitags)
       .then(response => response.json())
-      .then(data => app.ruuvitags = data)
-  }
-}
-
-function fetchTellstickData() {
-  if (tellstickApi.enabled) {
-    fetch(tellstickApi.urls.tellstickSensors)
-      .then(response => response.json())
       .then(data => {
-        app.tellstickSensors = data
+        app.ruuvitags = data
 
         if (data.length > 0) {
+          app.hasRuuvitagSensors = true
           app.hasSensors = true
         }
       })
+  }
+}
 
-    fetch(tellstickApi.urls.tellstickSwitches)
+function fetchTellstickSwitchData() {
+  if (tellstickSwitchApi.enabled) {
+    fetch(tellstickSwitchApi.urls.tellstickSwitches)
       .then(response => response.json())
       .then(data => {
         app.tellstickSwitches = data
@@ -79,6 +78,21 @@ function fetchTellstickData() {
         if (data.groups.length > 0) {
           app.hasSwitchGroups = true
           app.hasControllables = true
+        }
+      })
+  }
+}
+
+function fetchTellstickSensorData() {
+  if (tellstickSensorApi.enabled) {
+    fetch(tellstickSensorApi.urls.tellstickSensors)
+      .then(response => response.json())
+      .then(data => {
+        app.tellstickSensors = data
+
+        if (data.length > 0) {
+          app.hasTellstickSensors = true
+          app.hasSensors = true
         }
       })
   }
@@ -104,7 +118,8 @@ function fetchHueData() {
 
 function fetchData() {
   fetchRuuvitagData()
-  fetchTellstickData()
+  fetchTellstickSwitchData()
+  fetchTellstickSensorData()
   fetchHueData()
 }
 
