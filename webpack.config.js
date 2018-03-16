@@ -16,7 +16,8 @@ module.exports = {
     new CopyWebpackPlugin([
       { from: 'src/index.html', to: 'index.html'},
       { from: 'src/style/', to: 'style/'},
-      { from: 'src/images', to: 'images/'}
+      { from: 'src/images', to: 'images/'},
+      { from: 'font-awesome-4.7.0/', to: 'font-awesome-4.7.0/'}
     ])
   ],
   module: {
