@@ -1,4 +1,4 @@
-import {tellsticSwitchkApi} from '../config.js'
+import {tellstickSwitchApi} from '../config.js'
 
 export const tdSwitchData = (toggleSwitch) => ({
   template: `<div v-if="device.switchedOn" v-on:click="turnOff(device.id)" class="switch clickable">
