@@ -9,18 +9,18 @@ require('./index.css')
 
 const postHeaders = {'Content-Type': 'application/json', 'Access-Control-Allow-Origin':'*'}
 
-const toggleSwitch = (url, deviceIds) => {
+const toggleSwitch = async (url, deviceIds) => {
   const postBody = JSON.stringify(deviceIds)
-  return fetch(url, {method: 'POST', mode: 'cors', body: postBody, headers: postHeaders})
-    .then(response => response.json())
-    .then(data => app.tellstickSwitches = data)
+  const response = await fetch(url, {method: 'POST', mode: 'cors', body: postBody, headers: postHeaders})
+  const data = await response.json()
+  app.tellstickSwitches = data
 }
 
-const toggleHueSwitch = (url, group) => {
-  const postBody = JSON.stringify({"lights": group.attributes.attributes.lights});
-  return fetch(url, {method: 'POST', mode: 'cors', body: postBody, headers: postHeaders })
-    .then(response => response.json())
-    .then(data => app.hueGroups = data)
+const toggleHueSwitch = async (url, group) => {
+  const postBody = JSON.stringify({"lights": group.attributes.attributes.lights})
+  const response = await fetch(url, {method: 'POST', mode: 'cors', body: postBody, headers: postHeaders })
+  const data = await response.json()
+  app.hueGroups = data
 }
 
 const app = new Vue({
@@ -48,71 +48,61 @@ const app = new Vue({
   }
 })
 
-function fetchRuuvitagData() {
+async function fetchRuuvitagData() {
   if (ruuvitagApi.enabled) {
-    fetch(ruuvitagApi.urls.ruuvitags)
-      .then(response => response.json())
-      .then(data => {
-        app.ruuvitags = data
+    const response = await fetch(ruuvitagApi.urls.ruuvitags)
+    const data = await response.json()
+    app.ruuvitags = data
 
-        if (data.length > 0) {
-          app.hasRuuvitagSensors = true
-          app.hasSensors = true
-        }
-      })
+    if (data.length > 0) {
+      app.hasRuuvitagSensors = true
+      app.hasSensors = true
+    }
   }
 }
 
-function fetchTellstickSwitchData() {
+async function fetchTellstickSwitchData() {
   if (tellstickSwitchApi.enabled) {
-    fetch(tellstickSwitchApi.urls.tellstickSwitches)
-      .then(response => response.json())
-      .then(data => {
-        app.tellstickSwitches = data
+    const response = await fetch(tellstickSwitchApi.urls.tellstickSwitches)
+    const data = await response.json()
+    app.tellstickSwitches = data
 
-        if (data.devices.length > 0) {
-          app.hasSwitches = true
-          app.hasControllables = true
-        }
+    if (data.devices.length > 0) {
+      app.hasSwitches = true
+      app.hasControllables = true
+    }
 
-        if (data.groups.length > 0) {
-          app.hasSwitchGroups = true
-          app.hasControllables = true
-        }
-      })
+    if (data.groups.length > 0) {
+      app.hasSwitchGroups = true
+      app.hasControllables = true
+    }
   }
 }
 
-function fetchTellstickSensorData() {
+async function fetchTellstickSensorData() {
   if (tellstickSensorApi.enabled) {
-    fetch(tellstickSensorApi.urls.tellstickSensors)
-      .then(response => response.json())
-      .then(data => {
-        app.tellstickSensors = data
+    const response = await fetch(tellstickSensorApi.urls.tellstickSensors)
+    const data = await response.json()
+    app.tellstickSensors = data
 
-        if (data.length > 0) {
-          app.hasTellstickSensors = true
-          app.hasSensors = true
-        }
-      })
+    if (data.length > 0) {
+      app.hasTellstickSensors = true
+      app.hasSensors = true
+    }
   }
 }
 
-function fetchHueData() {
+async function fetchHueData() {
   if (hueApi.enabled) {
-    // app.hueSwitches = 'Jee'
-    fetch(hueApi.urls.init, {headers: postHeaders}).then(initdata => {
-      fetch(hueApi.urls.hueGroups)
-      .then(response => response.json())
-      .then(data => {
-        app.hueGroups = data
+    await fetch(hueApi.urls.init, {headers: postHeaders})
+    const response = await fetch(hueApi.urls.hueGroups)
+    const data = await response.json()
+    app.hueGroups = data
 
-        if (data.length > 0) {
-          app.hasHueGroups = true
-          app.hasControllables = true
-        }
-      })
-    })
+    if (data.length > 0) {
+      app.hasHueGroups = true
+      app.hasControllables = true
+    }
   }
 }
 
