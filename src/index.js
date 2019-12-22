@@ -52,7 +52,7 @@ async function fetchRuuvitagData() {
   if (ruuvitagApi.enabled) {
     const response = await fetch(ruuvitagApi.urls.ruuvitags)
     const data = await response.json()
-    app.ruuvitags = data
+    app.ruuvitags = sortByNameAsceding(data)
 
     if (data.length > 0) {
       app.hasRuuvitagSensors = true
@@ -65,7 +65,9 @@ async function fetchTellstickSwitchData() {
   if (tellstickSwitchApi.enabled) {
     const response = await fetch(tellstickSwitchApi.urls.tellstickSwitches)
     const data = await response.json()
-    app.tellstickSwitches = data
+    const devices = sortByNameAsceding(data.devices)
+    const groups = sortByNameAsceding(data.groups)
+    app.tellstickSwitches = {devices, groups}
 
     if (data.devices.length > 0) {
       app.hasSwitches = true
@@ -83,7 +85,7 @@ async function fetchTellstickSensorData() {
   if (tellstickSensorApi.enabled) {
     const response = await fetch(tellstickSensorApi.urls.tellstickSensors)
     const data = await response.json()
-    app.tellstickSensors = data
+    app.tellstickSensors = sortByNameAsceding(data)
 
     if (data.length > 0) {
       app.hasTellstickSensors = true
@@ -104,6 +106,20 @@ async function fetchHueData() {
       app.hasControllables = true
     }
   }
+}
+
+function sortByNameAsceding(data) {
+  return data.sort(function (a, b) {
+    const aName = a.name.toUpperCase()
+    const bName = b.name.toUpperCase()
+
+    if (aName < bName) {
+      return -1
+    } else if (aName > bName) {
+      return 1
+    }
+    return 0
+  })
 }
 
 function fetchData() {
