@@ -13,7 +13,9 @@ const toggleSwitch = async (url, deviceIds) => {
   const postBody = JSON.stringify(deviceIds)
   const response = await fetch(url, {method: 'POST', mode: 'cors', body: postBody, headers: postHeaders})
   const data = await response.json()
-  app.tellstickSwitches = data
+  const devices = sortByNameAsceding(data.devices)
+  const groups = sortByNameAsceding(data.groups)
+  app.tellstickSwitches = {devices, groups}
 }
 
 const toggleHueSwitch = async (url, group) => {
