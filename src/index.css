@@ -120,7 +120,7 @@ body {
 
 .switches, .switch-groups {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 150px);
+  grid-template-columns: repeat(3, 1fr);
   grid-gap: 10px;
 }
 
@@ -145,7 +145,7 @@ body {
 }
 
 .switch {
-  grid-template-columns: 135px;
+  grid-template-columns: 98%;
 }
 
 .master-switch {
