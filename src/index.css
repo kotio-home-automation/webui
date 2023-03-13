@@ -85,7 +85,7 @@ body {
 .switch-status {
   grid-area: switch-status;
   font-size: 3em;
-  margin-left: 35px;
+  margin-left: 25px;
   padding-top: 10px;
 }
 
