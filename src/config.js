@@ -1,6 +1,7 @@
 const TELLSTICK_API_URL = 'http://localhost:5001'
 const RUUVITAG_API_URL = 'http://localhost:5000'
 const HUE_API_URL = 'http://localhost:3103'
+const TAPO_API_URL = 'http://localhost:5020'
 
 export const FETCH_INTERVAL = 30000
 
@@ -23,7 +24,7 @@ export const tellstickSwitchApi = {
 export const tellstickSensorApi = {
   enabled: false,
   urls: {
-    tellstickSensors: `${TELLSTICK_API_URL}/tellstick/sensors`,
+    tellstickSensors: `${TELLSTICK_API_URL}/tellstick/sensors`
   }
 }
 
@@ -35,5 +36,12 @@ export const hueApi = {
     init: `${HUE_API_URL}/findbridges`,
     hueLights: `${HUE_API_URL}/lights`,
     hueGroups: `${HUE_API_URL}/groups`
+  }
+}
+
+export const tapoApi = {
+  enabled: false,
+  urls: {
+    privacy: `${TAPO_API_URL}/privacy`
   }
 }

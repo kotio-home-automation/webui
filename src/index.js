@@ -1,10 +1,12 @@
 import Vue from 'vue'
-import {ruuvitagApi, tellstickSwitchApi, tellstickSensorApi, hueApi, FETCH_INTERVAL} from './config.js'
+import {ruuvitagApi, tellstickSwitchApi, tellstickSensorApi, hueApi, tapoApi, FETCH_INTERVAL} from './config.js'
 import {tagData} from './components/ruuvitag'
 import {tdSensorData} from './components/tellstickSensor'
 import {tdSwitchData} from './components/tellstickSwitch'
 import {hueSwitchData} from './components/hueSwitch'
 import {masterSwitchOnData, masterSwitchOffData} from './components/masterSwitch'
+import { cameraOffData, cameraOnData } from './components/tapo-camera-privacy-switch.js'
+import { tapoCameraData } from './components/tapo-camera.js'
 require('./index.css')
 
 const postHeaders = {'Content-Type': 'application/json', 'Access-Control-Allow-Origin':'*'}
@@ -25,6 +27,14 @@ const toggleHueSwitch = async (url, group) => {
   app.hueGroups = data
 }
 
+const cameraSwitch = async (url, isPrivacyModeOn) => {
+  const postBody = JSON.stringify({"privacy": isPrivacyModeOn})
+  const response = await fetch(url, {method: 'POST', mode: 'cors', body: postBody, headers: postHeaders})
+  const data = await response.json()
+  app.tapoCameras = data.data
+  app.tapoCamerasTurnedOn = data.data.filter(camera => !camera.privacy_enabled).length > 0
+}
+
 const app = new Vue({
   el: '#app',
   data: {
@@ -38,7 +48,11 @@ const app = new Vue({
     hasSwitchGroups: false,
     hueGroups: hueApi.enabled,
     hasHueGroups: false,
-    hasControllables: false
+    hasControllables: false,
+    hasTapoCameras: false,
+    tapoCameras: tapoApi.enabled,
+    tapoCamerasTurnedOn: false
+
   },
   components: {
     'ruuvitag': tagData,
@@ -46,7 +60,10 @@ const app = new Vue({
     'tdswitch': tdSwitchData(toggleSwitch),
     'hueswitch': hueSwitchData(toggleHueSwitch),
     'masterswitch-on': masterSwitchOnData(toggleSwitch),
-    'masterswitch-off': masterSwitchOffData(toggleSwitch)
+    'masterswitch-off': masterSwitchOffData(toggleSwitch),
+    'cameras-off': cameraOffData(cameraSwitch),
+    'cameras-on': cameraOnData(cameraSwitch),
+    'tapo-camera-data': tapoCameraData
   }
 })
 
@@ -110,6 +127,19 @@ async function fetchHueData() {
   }
 }
 
+async function fetchTapoData() {
+  if (tapoApi.enabled) {
+    const response = await fetch(tapoApi.urls.privacy)
+    const data = await response.json()
+    app.tapoCameras = sortByNameAsceding(data.data)
+
+    if (data.data.length > 0) {
+      app.hasTapoCameras = true
+      app.tapoCamerasTurnedOn = data.data.filter(camera => !camera.privacy_enabled).length > 0
+    }
+  }
+}
+
 function sortByNameAsceding(data) {
   return data.sort(function (a, b) {
     const aName = a.name.toUpperCase()
@@ -129,6 +159,7 @@ function fetchData() {
   fetchTellstickSwitchData()
   fetchTellstickSensorData()
   fetchHueData()
+  fetchTapoData()
 }
 
 fetchData()

@@ -55,6 +55,15 @@
           <hueswitch :group="group"/>
         </div>
       </div>
+      <div class="cameras" v-if="hasTapoCameras">
+        <div v-for="camera in tapoCameras">
+          <tapo-camera-data :camera="camera"></tapo-camera-data>
+        </div>
+      </div>
+      <div class="camera-switches" v-if="hasTapoCameras">
+        <cameras-off v-if="tapoCamerasTurnedOn"></cameras-off>
+        <cameras-on v-else></cameras-on>
+      </div>
     </div>
     <script src="bundle.js"></script>
   </body>
