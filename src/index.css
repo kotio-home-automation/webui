@@ -36,7 +36,7 @@ body {
   cursor: pointer;
 }
 
-.sensors, .switches, .switch-groups, .master-switches {
+.sensors, .switches, .switch-groups, .master-switches, .camera-switches, .cameras {
   max-width: 790px;
   background-color: #e6e6e6;
   padding: 5px;
@@ -89,14 +89,24 @@ body {
   padding-top: 10px;
 }
 
-.tag-name, .sensor-name, .switch-status, .switch-name {
+.tag-name, .sensor-name, .switch-status, .switch-name, .camera-name {
   color: #626262;
   font-style: normal;
   text-transform: uppercase;
 }
 
-.switch-status, .switch-name {
+.switch-status, .switch-name, .camera-name {
   justify-self: center;
+}
+
+.camera-name {
+  padding-top: 10px;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.camera-status {
+  font-size: 2em;
 }
 
 .tag-name, .sensor-name {
@@ -118,9 +128,9 @@ body {
   grid-template-columns: 32% 32% 32%;
 }
 
-.switches, .switch-groups {
+.switches, .switch-groups, .cameras {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 150px);
+  grid-template-columns: repeat(3, 1fr);
   grid-gap: 10px;
 }
 
@@ -144,11 +154,18 @@ body {
     "switch-name";
 }
 
-.switch {
-  grid-template-columns: 135px;
+.camera {
+  height: 105px;
+  background-color: #d9d9d9;
+  padding: 5px 0 5px 0;
+  border-bottom-color: #c0c0c0;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  display: grid;
+  grid-gap: 5px;
 }
 
-.master-switch {
+.master-switch, .switch, .camera {
   grid-template-columns: 98%;
 }
 
