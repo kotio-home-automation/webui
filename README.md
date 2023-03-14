@@ -4,7 +4,7 @@ The UI is a vue.js application that can be deployed to what ever web server of y
 
 ## Configuration
 
-The UI must be configured to connect to the kotio servers. The file `src/config.js` contains boolean variables `ruuvitagApi.enabled`, `tellstickApi.enabled`, `hueApi.enabled` and `tapoApo.enabled` that indicate whether that specific integration is enabled and variables `RUUVITAG_API_URL`, `TELLSTICK_API_URL`, `HUE_API_URL` and `TAPO_API_URL` should be configured to contain the host name or IP address where the protocol specific kotio server is located.
+The UI must be configured to connect to the kotio servers. The file `src/config.js` contains boolean variables `ruuvitagApi.enabled`, `tellstickApi.enabled`, `hueApi.enabled`, `tapoApo.enabled` and `shellyApi.enabled` that indicate whether that specific integration is enabled and variables `RUUVITAG_API_URL`, `TELLSTICK_API_URL`, `HUE_API_URL`, `TAPO_API_URL`, `SHELLY_API_URL` should be configured to contain the host name or IP address where the protocol specific kotio server is located.
 
 ## Running the dev server
 
