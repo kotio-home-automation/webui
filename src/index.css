@@ -8,6 +8,10 @@ body {
   font-size: 10px;
 }
 
+.yellow {
+  color: #ffff66;
+}
+
 .blue {
   color: #9999ff;
 }
@@ -76,6 +80,23 @@ body {
   grid-column-end: 3
 }
 
+.shelly-sensor-name {
+  grid-area: shelly-sensor-name;
+}
+
+.shelly-sensor-temperature {
+  grid-area: shelly-sensor-temperature;
+  margin-left: 5px;
+}
+
+.shelly-sensor-state {
+  grid-area: shelly-sensor-state;
+}
+
+.shelly-sensor-lux {
+  grid-area: shelly-sensor-lux;
+}
+
 .switch-name {
   grid-area: switch-name;
   font-size: 1em;
@@ -89,7 +110,7 @@ body {
   padding-top: 10px;
 }
 
-.tag-name, .sensor-name, .switch-status, .switch-name, .camera-name {
+.tag-name, .sensor-name, .switch-status, .switch-name, .camera-name, .shelly-sensor-name {
   color: #626262;
   font-style: normal;
   text-transform: uppercase;
@@ -109,14 +130,14 @@ body {
   font-size: 2em;
 }
 
-.tag-name, .sensor-name {
+.tag-name, .sensor-name, .shelly-sensor-name {
   justify-self: left;
   font-size: 1.9em;
   font-family: "League Gothic";
   margin-left: 5px;
 }
 
-.tag, .sensor {
+.tag, .sensor, .shelly-sensor {
   margin: 5px 0 5px 0;
   background-color: #d9d9d9;
   padding: 5px 0 10px 0;
@@ -181,11 +202,17 @@ body {
     "sensor-temperature sensor-humidity sensor-humidity";
 }
 
-.tag div i, .sensor div i {
+.shelly-sensor {
+  grid-template-areas:
+    "shelly-sensor-name shelly-sensor-name shelly-sensor-name"
+    "shelly-sensor-temperature shelly-sensor-state shelly-sensor-lux";
+}
+
+.tag div i, .sensor div i, .shelly-sensor i {
   font-size: 2em;
 }
 
-.tag-temperature, .tag-humidity, .tag-pressure, .sensor-temperature, .sensor-humidity {
+.tag-temperature, .tag-humidity, .tag-pressure, .sensor-temperature, .sensor-humidity, .shelly-sensor-temperature, .shelly-sensor-state, .shelly-sensor-lux {
   justify-self: left;
   font-size: 1.5em;
   font-weight: bold;

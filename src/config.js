@@ -2,6 +2,7 @@ const TELLSTICK_API_URL = 'http://localhost:5001'
 const RUUVITAG_API_URL = 'http://localhost:5000'
 const HUE_API_URL = 'http://localhost:3103'
 const TAPO_API_URL = 'http://localhost:5020'
+const SHELLY_API_URL = 'http://localhost:5010'
 
 export const FETCH_INTERVAL = 30000
 
@@ -40,8 +41,15 @@ export const hueApi = {
 }
 
 export const tapoApi = {
-  enabled: false,
+  enabled: true,
   urls: {
     privacy: `${TAPO_API_URL}/privacy`
+  }
+}
+
+export const shellyApi = {
+  enabled: false,
+  urls: {
+    sensors: `${SHELLY_API_URL}/sensor`
   }
 }

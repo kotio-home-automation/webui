@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import {ruuvitagApi, tellstickSwitchApi, tellstickSensorApi, hueApi, tapoApi, FETCH_INTERVAL} from './config.js'
+import {ruuvitagApi, tellstickSwitchApi, tellstickSensorApi, hueApi, tapoApi, FETCH_INTERVAL, shellyApi} from './config.js'
 import {tagData} from './components/ruuvitag'
 import {tdSensorData} from './components/tellstickSensor'
 import {tdSwitchData} from './components/tellstickSwitch'
@@ -7,6 +7,7 @@ import {hueSwitchData} from './components/hueSwitch'
 import {masterSwitchOnData, masterSwitchOffData} from './components/masterSwitch'
 import { cameraOffData, cameraOnData } from './components/tapo-camera-privacy-switch.js'
 import { tapoCameraData } from './components/tapo-camera.js'
+import { shellySensorData } from './components/shellySensor.js'
 require('./index.css')
 
 const postHeaders = {'Content-Type': 'application/json', 'Access-Control-Allow-Origin':'*'}
@@ -51,7 +52,9 @@ const app = new Vue({
     hasControllables: false,
     hasTapoCameras: false,
     tapoCameras: tapoApi.enabled,
-    tapoCamerasTurnedOn: false
+    tapoCamerasTurnedOn: false,
+    hasShellySensors: false,
+    shellySensors: shellyApi.enabled
 
   },
   components: {
@@ -63,7 +66,8 @@ const app = new Vue({
     'masterswitch-off': masterSwitchOffData(toggleSwitch),
     'cameras-off': cameraOffData(cameraSwitch),
     'cameras-on': cameraOnData(cameraSwitch),
-    'tapo-camera-data': tapoCameraData
+    'tapo-camera-data': tapoCameraData,
+    'shelly-sensor': shellySensorData
   }
 })
 
@@ -140,6 +144,19 @@ async function fetchTapoData() {
   }
 }
 
+async function fetchShellySensorData() {
+  if (shellyApi.enabled) {
+    const response = await fetch(shellyApi.urls.sensors)
+    const data = await response.json()
+    app.shellySensors = sortByNameAsceding(data)
+
+    if (data.length > 0) {
+      app.hasShellySensors = true
+      app.hasSensors = true
+    }
+  }
+}
+
 function sortByNameAsceding(data) {
   return data.sort(function (a, b) {
     const aName = a.name.toUpperCase()
@@ -160,6 +177,7 @@ function fetchData() {
   fetchTellstickSensorData()
   fetchHueData()
   fetchTapoData()
+  fetchShellySensorData()
 }
 
 fetchData()
