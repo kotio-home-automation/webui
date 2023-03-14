@@ -8,6 +8,10 @@ body {
   font-size: 10px;
 }
 
+.icon {
+  margin-right: 0.5rem;
+}
+
 .yellow {
   color: #ffff66;
 }
@@ -30,10 +34,6 @@ body {
 
 .red {
   color: red;
-}
-
-.icon {
-  margin-right: 0.3em;
 }
 
 .clickable {
@@ -100,13 +100,11 @@ body {
 .switch-name {
   grid-area: switch-name;
   font-size: 1em;
-  margin-left: 20px;
 }
 
 .switch-status {
   grid-area: switch-status;
   font-size: 3em;
-  margin-left: 25px;
   padding-top: 10px;
 }
 
@@ -128,6 +126,8 @@ body {
 
 .camera-status {
   font-size: 2em;
+  justify-self: center;
+  padding-top: 5px;
 }
 
 .tag-name, .sensor-name, .shelly-sensor-name {
