@@ -3,13 +3,13 @@ import {tellstickSwitchApi} from '../config.js'
 export const tdSwitchData = (toggleSwitch) => ({
   template: `<div v-if="device.switchedOn" v-on:click="turnOff(device.id)" class="switch clickable">
       <div class="switch-status">
-        <i class="fa fa-power-off fa-lg green icon clickable"></i>
+        <i class="fa fa-power-off fa-lg green clickable"></i>
       </div>
       <div class="switch-name">{{device.name}}</div>
     </div>
     <div v-else v-on:click="turnOn(device.id)" class="switch clickable">
       <div class="switch-status clickable">
-        <i class="fa fa-power-off fa-lg red icon"></i>
+        <i class="fa fa-power-off fa-lg red"></i>
       </div>
       <div class="switch-name">{{device.name}}</div>
     </div>`,

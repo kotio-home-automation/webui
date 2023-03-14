@@ -4,7 +4,7 @@ export const masterSwitchOffData = (toggleSwitch) => ({
   template: `<div>
       <div v-on:click="allOff(devices, switchgroups)" class="master-switch clickable">
         <div class="switch-status">
-          <i class="fa fa-power-off fa-lg all-red icon clickable"></i>
+          <i class="fa fa-power-off fa-lg all-red clickable"></i>
         </div>
         <div class="switch-name">All off</div>
       </div>
@@ -27,7 +27,7 @@ export const masterSwitchOnData = (toggleSwitch) => ({
   template: `<div>
       <div v-on:click="allOn(devices, switchgroups)" class="master-switch clickable">
         <div class="switch-status">
-          <i class="fa fa-power-off fa-lg all-green icon clickable"></i>
+          <i class="fa fa-power-off fa-lg all-green clickable"></i>
         </div>
         <div class="switch-name">All on</div>
       </div>
